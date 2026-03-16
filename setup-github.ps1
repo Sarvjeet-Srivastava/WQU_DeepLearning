@@ -7,7 +7,7 @@
 .PARAMETER GitHubUsername
     Your GitHub username (required for remote URL)
 .PARAMETER RepositoryName
-    Name of the GitHub repository (default: concrete-strength-prediction)
+    Name of the GitHub repository (default: WQU_DeepLearning)
 .PARAMETER Push
     Whether to push to remote (requires repository to exist on GitHub)
 #>
@@ -17,7 +17,7 @@ param(
     [string]$GitHubUsername,
 
     [Parameter(Mandatory=$false)]
-    [string]$RepositoryName = "concrete-strength-prediction",
+    [string]$RepositoryName = "WQU_DeepLearning",
 
     [Parameter(Mandatory=$false)]
     [switch]$Push
@@ -63,10 +63,10 @@ $filesToAdd = @(
     "src/p1-concrete_strength_analysis.py",
     "utils/check_cuda.py",
     "Models/P1/",
-    "Images/P1/",
+    "Output/P1/",
     "README.md",
     ".gitignore",
-    "DOCUMENTATION_INDEX.md"
+    "Project1 - Concrete Strength.md"
 )
 
 foreach ($file in $filesToAdd) {
@@ -87,13 +87,13 @@ Write-Host ""
 
 # Step 5: Create commit
 Write-Host "Step 5: Creating initial commit..." -ForegroundColor Green
-$commitMessage = "Initial commit: Production-grade concrete strength prediction models
+$commitMessage = "Initial commit: WQU_DeepLearning"
 
 - Add utils/logger.py: Logging configuration utility
 - Add src/p1-concrete_strength_analysis.py: Main training script (918 lines)
 - Add utils/check_cuda.py: CUDA availability checker
 - Add 9 trained model files in Models/P1/
-- Add visualization outputs in Images/P1/
+- Add visualization outputs in Output/P1/
 - Add comprehensive README.md and documentation
 
 Quality Features:

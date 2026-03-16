@@ -40,7 +40,7 @@ logger.info(f"PyTorch version: {torch.__version__}")
 base_dir: Path = Path(__file__).resolve().parent.parent
 base_data_dir: Path = base_dir / "Data" / "p1-concrete-data"
 models_dir: Path = base_dir / "Models" / "P1"
-images_dir: Path = base_dir / "Images" / "P1"
+images_dir: Path = base_dir / "Output" / "P1"
 
 
 class CustomManualMLPModel:
@@ -509,7 +509,7 @@ class ConcreteStrengthAnalysis:
                     ax.set_ylabel(f"{feature_names[-1][0]}\n({feature_names[-1][1]})")
                     idx += 1
             
-            out_dir = base_dir / "Images" / "P1"
+            out_dir = base_dir / "Output" / "P1"
             out_dir.mkdir(parents=True, exist_ok=True)
             out_path = out_dir / "Concrete_Strength_Analysis.png"
             fig.savefig(out_path, dpi=300)
@@ -743,7 +743,7 @@ def main() -> None:
         3. Records training loss history
     
     Finally, creates a comparative visualization of all training loss curves
-    and saves it to Images/P1/Train Loss Comparison.png
+    and saves it to Output/P1/Train Loss Comparison.png
     
     Raises:
         Exception: If any critical step in the pipeline fails.
@@ -755,10 +755,10 @@ def main() -> None:
     try:
         # Initialize directories
         models_dir = base_dir / "Models" / "P1"
-        images_dir = base_dir / "Images" / "P1"
+        images_dir = base_dir / "Output" / "P1"
         models_dir.mkdir(parents=True, exist_ok=True)
         images_dir.mkdir(parents=True, exist_ok=True)
-        logger.info("Directories initialized. Models: %s, Images: %s", models_dir, images_dir)
+        logger.info("Directories initialized. Models: %s, Output: %s", models_dir, images_dir)
 
         # Instantiate analysis orchestrator
         ca = ConcreteStrengthAnalysis()
