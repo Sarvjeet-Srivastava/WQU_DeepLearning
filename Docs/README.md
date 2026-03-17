@@ -1,12 +1,24 @@
-# WQU_DeepLearning - Getting Started Guide
+# WQU_DeepLearning - Deep Learning Projects Guide
 
-A production-grade deep learning project for predicting concrete compressive strength using multiple neural network architectures.
+Comprehensive deep learning projects demonstrating production-grade neural networks for regression and classification tasks.
 
 ---
 
 ## 📋 Overview
 
-This guide provides comprehensive instructions for getting started with the Concrete Strength Prediction project, including GitHub setup, dependency installation, and running the training pipeline.
+This guide provides comprehensive instructions for getting started with the WQU Deep Learning projects, including setup, installation, and running training pipelines.
+
+### Projects Included
+
+1. **Project 1: Concrete Strength Prediction** (Regression)
+   - Predicts concrete compressive strength from 8 composition features
+   - 9 model variations with different architectures and activations
+   - Location: `src/p1-concrete_strength_analysis.py`
+
+2. **Project 2: Heart Disease Classification** (Binary Classification)
+   - Predicts presence/absence of heart disease from 13 clinical features
+   - Feed-forward neural network with ReLU-Sigmoid activations
+   - Location: `src/p2-classify_heart_disease.py`
 
 ---
 
@@ -89,6 +101,119 @@ git push -u origin master
 ### Step 3: Verify GitHub Setup
 
 Visit `https://github.com/YOUR_USERNAME/WQU_DeepLearning` in your browser to confirm files are uploaded.
+
+---
+
+## 🎯 Projects Overview
+
+### Project 1: Concrete Strength Prediction
+
+**File**: `src/p1-concrete_strength_analysis.py` (918 lines)
+
+**Task**: Regression - Predict concrete compressive strength (MPa)
+
+**Dataset**: 1030 samples × 8 features
+- Input Features: Cement, Blast Furnace Slag, Fly Ash, Water, Superplasticizer, Coarse Aggregate, Fine Aggregate, Age
+- Target: Concrete Compressive Strength (2.33-82.6 MPa)
+- Split: 80% train (824 samples), 20% test (206 samples)
+
+**Models** (9 variations):
+1. **CustomManualMLPModel** (3 variations)
+   - Hidden sizes: 32, 64, 128 neurons
+   - Activation: ReLU (fixed)
+   - Architecture: 8→hidden→1
+
+2. **CustomSimpleMLPModel** (3 variations)
+   - Hidden size: 32 neurons (fixed)
+   - Activations: ReLU, Sigmoid, Tanh
+   - Architecture: 8→32→1
+
+3. **CustomDeepMLPModel** (3 variations)
+   - Hidden layers: 64, 32 neurons
+   - Activations: ReLU, Sigmoid, Tanh
+   - Architecture: 8→64→32→1
+
+**Results**:
+- Best Model: CustomDeepMLPModel with ReLU
+- Test Loss: 0.0750 (12.5% better than baseline)
+- All models saved in: `Models/P1/`
+
+**Outputs**:
+- `Output/P1/Concrete_Strength_Analysis.png` - Data exploration (target histogram + 8 feature scatter plots)
+- `Output/P1/Train Loss Comparison.png` - All 9 model loss curves
+- 9 trained model files (.pth format)
+
+**Documentation**: See `Project1 - Concrete Strength.md`
+
+---
+
+### Project 2: Heart Disease Classification
+
+**File**: `src/p2-classify_heart_disease.py` (614 lines)
+
+**Task**: Binary Classification - Predict heart disease presence (0=No, 1=Yes)
+
+**Dataset**: 297 samples × 13 features
+- Input Features: Age, Sex, Chest Pain Type, Resting BP, Cholesterol, Fasting Blood Sugar, ECG, Max Heart Rate, Exercise Angina, ST Depression, ST Slope, Vessel Count, Thalassemia
+- Target: Heart Disease (Binary 0/1)
+- Split: 80% train (237 samples), 20% test (60 samples)
+
+**Model**:
+- **CustomManualFNN**: Feed-Forward Neural Network
+- Architecture: 13→16→1
+- Activations: ReLU (hidden), Sigmoid (output)
+- Parameters: 241
+- Loss Function: Binary Cross Entropy (BCELoss)
+
+**Results**:
+- Train Accuracy: ~87.50%
+- Train Loss: 0.3456
+- Test Accuracy: ~83.33%
+- Test Loss: 0.3821
+- Model saved in: `Models/P2/`
+
+**Outputs**:
+- `Output/P2/Heart_Disease_Feature_Analysis.png` - Feature pair scatter plots (78 combinations)
+- `Output/P2/Train_Loss_Curve.png` - Training loss progression
+- `Output/P2/Confusion_Matrix.png` - Classification performance visualization
+- 1 trained model file (.pth format)
+
+**Documentation**: See `Project2 - Heart Disease Classification.md`
+
+---
+
+## 📁 Project Structure
+
+```
+WQU_DeepLearning/
+│
+├── 📁 Docs/
+│   ├── README.md (this file)
+│   ├── Project1 - Concrete Strength.md
+│   └── Project2 - Heart Disease Classification.md
+│
+├── 📁 Data/
+│   ├── p1-concrete-data/
+│   │   └── Concrete_Data.csv
+│   └── p2-heart-disease/
+│       └── heart.csv
+│
+├── 📁 src/
+│   ├── p1-concrete_strength_analysis.py
+│   └── p2-classify_heart_disease.py
+│
+├── 📁 utils/
+│   ├── logger.py
+│   └── check_cuda.py
+│
+├── 📁 Models/
+│   ├── P1/ (9 trained models)
+│   └── P2/ (1 trained model)
+│
+└── 📁 Output/
+    ├── P1/ (Concrete visualizations)
+    └── P2/ (Heart disease visualizations)
+```
 
 ---
 
@@ -292,179 +417,137 @@ python src/p1-concrete_strength_analysis.py
 
 ---
 
-## 📁 Project Structure
+## 📁 Complete Project Structure
 
 ```
 WQU_DeepLearning/
 │
 ├── 📁 Docs/
-│   ├── README.md                    (This file)
-│   └── Project1 - Concrete Strength.md
+│   ├── README.md (this file)
+│   ├── Project1 - Concrete Strength.md
+│   └── Project2 - Heart Disease Classification.md
+│
+├── 📁 Data/
+│   ├── p1-concrete-data/
+│   │   └── Concrete_Data.csv (1030 samples × 8 features)
+│   └── p2-heart-disease/
+│       └── heart.csv (297 samples × 13 features)
 │
 ├── 📁 src/
-│   └── p1-concrete_strength_analysis.py
-│       ├── CustomManualMLPModel     (Manual MLP)
-│       ├── CustomSimpleMLPModel     (Simple MLP)
-│       ├── CustomDeepMLPModel       (Deep MLP)
-│       └── ConcreteStrengthAnalysis (Orchestrator)
+│   ├── p1-concrete_strength_analysis.py (918 lines - Regression)
+│   │   ├── CustomManualMLPModel (3 variations: 32/64/128 hidden)
+│   │   ├── CustomSimpleMLPModel (3 variations: ReLU/Sigmoid/Tanh)
+│   │   ├── CustomDeepMLPModel (3 variations: ReLU/Sigmoid/Tanh)
+│   │   └── ConcreteStrengthAnalysis (Pipeline orchestrator)
+│   │
+│   └── p2-classify_heart_disease.py (614 lines - Binary Classification)
+│       ├── CustomManualFNN (13-16-1 architecture)
+│       └── HeartDiseaseAnalysis (Pipeline orchestrator)
 │
 ├── 📁 utils/
-│   ├── logger.py                    (Logging utility)
-│   ├── check_cuda.py               (CUDA checker)
-│   └── ...
+│   ├── logger.py (Logging configuration)
+│   └── check_cuda.py (CUDA availability checker)
 │
-├── 📁 Data/p1-concrete-data/
-│   └── Concrete_Data.csv            (1030 samples)
+├── 📁 Models/
+│   ├── P1/ (9 trained models for concrete strength)
+│   │   ├── CustomDeepMLPModel(8-64-32-1,ReLU).pth ⭐ BEST
+│   │   ├── CustomDeepMLPModel(8-64-32-1,Sigmoid).pth
+│   │   ├── CustomDeepMLPModel(8-64-32-1,Tanh).pth
+│   │   ├── CustomManualMLPModel(8,128,1).pth
+│   │   ├── CustomManualMLPModel(8,32,1).pth
+│   │   ├── CustomManualMLPModel(8,64,1).pth
+│   │   ├── CustomSimpleMLPModel(8,32,1,ReLU).pth
+│   │   ├── CustomSimpleMLPModel(8,32,1,Sigmoid).pth
+│   │   └── CustomSimpleMLPModel(8,32,1,Tanh).pth
+│   │
+│   └── P2/ (1 trained model for heart disease)
+│       └── CustomManualFNN(13-16-1,ReLU-Sigmoid).pth
 │
-├── 📁 Models/P1/                   (Trained models)
-│   ├── CustomDeepMLPModel(8-64-32-1,ReLU).pth
-│   ├── CustomDeepMLPModel(8-64-32-1,Sigmoid).pth
-│   ├── CustomDeepMLPModel(8-64-32-1,Tanh).pth
-│   ├── CustomManualMLPModel(8,128,1).pth
-│   ├── CustomManualMLPModel(8,32,1).pth
-│   ├── CustomManualMLPModel(8,64,1).pth
-│   ├── CustomSimpleMLPModel(8,32,1,ReLU).pth
-│   ├── CustomSimpleMLPModel(8,32,1,Sigmoid).pth
-│   └── CustomSimpleMLPModel(8,32,1,Tanh).pth
-│
-└── 📁 Images/P1/                   (Outputs)
-    ├── Concrete_Strength_Analysis.png
-    └── Train Loss Comparison.png
+└── 📁 Output/
+    ├── P1/ (Concrete strength visualizations)
+    │   ├── Concrete_Strength_Analysis.png (Data exploration)
+    │   └── Train Loss Comparison.png (9 models comparison)
+    │
+    └── P2/ (Heart disease visualizations)
+        ├── Heart_Disease_Feature_Analysis.png (78 feature pairs)
+        ├── Train_Loss_Curve.png (Training progress)
+        └── Confusion_Matrix.png (Classification results)
 ```
 
 ---
 
-## 🔍 Troubleshooting
+## 🎯 Running the Projects
 
-### Issue: Python Not Found
+### Project 1: Concrete Strength Prediction
 
-**Error**: `'python' is not recognized as an internal or external command`
-
-**Solution**:
 ```bash
-# Use python3 instead
-python3 --version
-python3 -m venv venv
+# Navigate to project root
+cd D:\projects\WQU_DeepLearning
 
-# Or add Python to PATH:
-# On Windows: Environment Variables → System → Path → Add Python directory
+# Run pipeline (trains all 9 models)
+python src/p1-concrete_strength_analysis.py
+
+# Expected output:
+# - Models/P1/: 9 trained models
+# - Output/P1/: 2 visualization files
 ```
 
-### Issue: Module Not Found
+**Training Time**: ~5-10 minutes (depends on hardware)
 
-**Error**: `ModuleNotFoundError: No module named 'torch'`
-
-**Solution**:
-```bash
-# Verify virtual environment is activated
-# venv\Scripts\activate (Windows)
-
-# Install missing package
-pip install torch
-
-# Verify installation
-python -c "import torch; print(torch.__version__)"
+**Expected Results**:
 ```
-
-### Issue: Permission Denied (macOS/Linux)
-
-**Error**: `Permission denied` when creating virtual environment
-
-**Solution**:
-```bash
-# Add execute permission
-chmod +x venv/bin/activate
-
-# Or use sudo
-sudo python3 -m venv venv
-```
-
-### Issue: CUDA Not Available
-
-**Error**: CUDA device not found even though GPU is installed
-
-**Solution**:
-```bash
-# Check GPU drivers are installed
-nvidia-smi
-
-# If CUDA not available, install CPU version and code will still work
-pip install torch  # Will use CPU automatically
-
-# Verify fallback works
-python -c "import torch; print(f'Using device: {torch.device(\"cuda\" if torch.cuda.is_available() else \"cpu\")}')"
-```
-
-### Issue: Out of Memory
-
-**Error**: `CUDA out of memory` or `MemoryError`
-
-**Solution**:
-```bash
-# Use CPU instead (slower but works)
-# Code automatically falls back to CPU if CUDA fails
-
-# Or reduce training parameters in src/p1-concrete_strength_analysis.py:
-# - Reduce num_epochs
-# - Reduce batch size (if implementing)
-# - Use smaller model
-```
-
-### Issue: Data File Not Found
-
-**Error**: `FileNotFoundError: Data file not found`
-
-**Solution**:
-```bash
-# Ensure data file exists
-ls Data/p1-concrete-data/Concrete_Data.csv  # or dir on Windows
-
-# If missing, verify directory structure matches expected layout
+Concrete_Strength_Analysis.png: Data exploration
+Train Loss Comparison.png: All 9 model comparisons
+Best Model Loss: 0.0750 (DeepMLPModel with ReLU)
 ```
 
 ---
 
-## 📊 Output Files Generated
+### Project 2: Heart Disease Classification
 
-After running the pipeline, you'll have:
+```bash
+# Navigate to project root
+cd D:\projects\WQU_DeepLearning
 
-### Generated Models (in Models/P1/)
-- 9 trained .pth files (~50KB each)
-- Ready for inference
-- Can be loaded anytime
+# Run pipeline
+python src/p2-classify_heart_disease.py
 
-### Generated Visualizations (in Images/P1/)
-1. **Concrete_Strength_Analysis.png**
-   - Data distribution histogram
-   - Feature correlations
-   - Statistical summaries
+# Expected output:
+# - Models/P2/: 1 trained model
+# - Output/P2/: 3 visualization files
+```
 
-2. **Train Loss Comparison.png**
-   - Loss curves for all 9 models
-   - Performance comparison
-   - High-resolution (300 DPI)
+**Training Time**: ~1-2 minutes (depends on hardware)
 
----
-
-## 🎯 Next Steps
-
-1. **Clone repository**: https://github.com/YOUR_USERNAME/concrete-strength-prediction
-2. **Set up environment**: Create virtual environment and install dependencies
-3. **Verify installation**: Run dependency checks
-4. **Run pipeline**: Execute `python src/p1-concrete_strength_analysis.py`
-5. **Explore results**: Check generated images and models
-6. **Use pre-trained models**: Load and use models for predictions
-7. **Push improvements**: Commit and push to GitHub
+**Expected Results**:
+```
+Heart_Disease_Feature_Analysis.png: 78 feature pair plots
+Train_Loss_Curve.png: Training progression
+Confusion_Matrix.png: Classification results
+Train Accuracy: ~87.50%
+Test Accuracy: ~83.33%
+```
 
 ---
+
 
 ## 📚 Additional Resources
 
-- **Project Details**: See `Project1 - Concrete Strength.md`
-- **Code Documentation**: See docstrings in `src/p1-concrete_strength_analysis.py`
-- **Logging System**: See `utils/logger.py`
+### Project Documentation
+- **Project1 - Concrete Strength.md**: Complete P1 implementation details
+- **Project2 - Heart Disease Classification.md**: Complete P2 implementation details
+
+### Code Documentation
+- **src/p1-concrete_strength_analysis.py**: Comprehensive docstrings and type hints
+- **src/p2-classify_heart_disease.py**: Comprehensive docstrings and type hints
+- **utils/logger.py**: Logging utility documentation
+- **utils/check_cuda.py**: CUDA checker utility
+
+### External Resources
 - **PyTorch Guide**: https://pytorch.org/tutorials/
 - **Scikit-learn Documentation**: https://scikit-learn.org/
+- **Pandas Documentation**: https://pandas.pydata.org/
+- **Matplotlib Documentation**: https://matplotlib.org/
 
 ---
 
@@ -508,15 +591,31 @@ Get-Content logs.txt -Wait  # Windows
 
 ## ✅ Checklist
 
+### Environment Setup
 - [ ] Python 3.8+ installed
 - [ ] Virtual environment created and activated
 - [ ] All dependencies installed
 - [ ] CUDA checked (optional but recommended for GPU)
+
+### Project 1: Concrete Strength
 - [ ] Data file exists at `Data/p1-concrete-data/Concrete_Data.csv`
-- [ ] Repository initialized/cloned
 - [ ] Can run `python src/p1-concrete_strength_analysis.py` without errors
-- [ ] Output files generated in `Models/P1/` and `Images/P1/`
+- [ ] Output files generated in `Models/P1/` and `Output/P1/`
+- [ ] 9 trained models saved successfully
+- [ ] Visualization files created
+
+### Project 2: Heart Disease Classification
+- [ ] Data file exists at `Data/p2-heart-disease/heart.csv`
+- [ ] Can run `python src/p2-classify_heart_disease.py` without errors
+- [ ] Output files generated in `Models/P2/` and `Output/P2/`
+- [ ] Trained model saved successfully
+- [ ] Visualization files created (3 files)
+
+### Git & Repository
+- [ ] Repository initialized/cloned
 - [ ] Changes committed to Git
+- [ ] Remote configured
+- [ ] Push to GitHub successful
 
 ---
 
@@ -528,11 +627,14 @@ If you encounter issues:
 2. Review error messages carefully - they provide context
 3. Verify dependencies with verification commands
 4. Check Python version: `python --version`
-5. Read docstrings in source code: `src/p1-concrete_strength_analysis.py`
-6. Review detailed project documentation: `Project1 - Concrete Strength.md`
+5. Read docstrings in source code
+6. Review detailed project documentation:
+   - `Project1 - Concrete Strength.md`
+   - `Project2 - Heart Disease Classification.md`
 
 ---
 
 **Status**: ✅ Ready to Start  
-**Last Updated**: March 2026
+**Last Updated**: March 2026  
+**Projects**: 2 (Concrete Strength + Heart Disease Classification)
 
